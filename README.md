@@ -25,5 +25,22 @@
 <h5># Instale as dependencias<h5>
 <p>npm install</p>
 
-<h5># Rode a aplicação</h5>
+<h5># Para rodar os testes de unidade</h5>
+<p>npm test</p>
+
+<h5># Para rodar a API</h5>
 <p>npm run dev<p>
+
+<hr>
+
+<h2>Front-end:</h2>
+<h5>** A API(back-end) deve estar rodando **</h5>
+
+<h5> # Acesse a pasta interface </h5>
+<p>cd interface</p>
+
+<h5># Instale as dependencias</h5>
+<p>npm install</p>
+
+<h5># Rode a aplicação</h5>
+<p>npm run serve</p>

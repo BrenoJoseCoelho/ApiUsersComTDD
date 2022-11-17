@@ -1,6 +1,6 @@
 
 const app =  require('../src/index.js');
-
+const mongoose = require('mongoose');
 const { StatusCodes } = require('http-status-codes');
 const chai = require('chai')
 const chaiHttp = require('chai-http');
@@ -26,7 +26,13 @@ const example =
 
 //testes da aplicação
 describe('Testes da aplicaçao',  () => {
-    it('o servidor esta online', function (done) {
+    before('Deve fazer conexão com o Banco de Dados', () => Promise.all([])
+    .then(() => mongoose.connect("mongodb://localhost:27017",{useNewUrlParser: true, useUnifiedTopology: true})));
+
+    it('Deve realizar um Drop no Database', () => Promise.all([])
+    .then(() => mongoose.connection.db.dropDatabase()));
+
+    it('O servidor esta online', function (done) {
         chai.request(app)
         .get('/')
         .end(function (err, res) {
@@ -36,7 +42,7 @@ describe('Testes da aplicaçao',  () => {
         });
     });
 
-    it('deveria ser uma lista vazia de usuarios', function (done) {
+    it('Deve ser uma lista vazia de usuarios', function (done) {
         chai.request(app)
         .get('/users')
         .end(function (err, res) {
@@ -47,7 +53,7 @@ describe('Testes da aplicaçao',  () => {
         });
     });
 
-    it('deveria criar o usuario Raupp', function (done) {
+    it('Deve criar o usuario Raupp', function (done) {
         chai.request(app)
         .post('/users')
         .send({name: "Raupp", email: "jose.raupp@devoz.com.br", age: 35})
@@ -71,7 +77,7 @@ describe('Testes da aplicaçao',  () => {
           });
       });
     
-    it('deveria criar o usuario Breno', function (done) {
+    it('Deve criar o usuario Breno', function (done) {
         chai.request(app)
         .post('/users')
         .send({name: "Breno", email: "breno@devoz.com.br", age: 19})
@@ -82,7 +88,7 @@ describe('Testes da aplicaçao',  () => {
         });
     });
 
-    it('deveria criar o usuario Beatriz', function (done) {
+    it('Deve criar o usuario Beatriz', function (done) {
         chai.request(app)
         .post('/users')
         .send({name: "Beatriz", email: "beatriz@devoz.com.br", age: 18})
@@ -95,7 +101,7 @@ describe('Testes da aplicaçao',  () => {
 
     
     
-    it('deveria criar o usuario Caio', function (done) {
+    it('Deve criar o usuario Caio', function (done) {
         chai.request(app)
         .post('/users')
         .send({name: "Caio", email: "caio@devoz.com.br", age: 22})
@@ -106,7 +112,7 @@ describe('Testes da aplicaçao',  () => {
         });
     });
 
-    it('deveria criar o usuario Vinicius', function (done) {
+    it('Deve criar o usuario Vinicius', function (done) {
         chai.request(app)
         .post('/users')
         .send({name: "Vinicius", email: "vinicius@devoz.com.br", age: 28})
@@ -117,7 +123,7 @@ describe('Testes da aplicaçao',  () => {
         });
     });
 
-    it('deveria criar o usuario Hilton', function (done) {
+    it('Deve criar o usuario Hilton', function (done) {
         chai.request(app)
         .post('/users')
         .send({name: "Hilton", email: "hilton@devoz.com.br", age: 57})
@@ -128,9 +134,9 @@ describe('Testes da aplicaçao',  () => {
         });
     });
 
-    it('deve excluir o usuario Vinicius', function (done) {
+    it('Deve excluir o usuario Caio', function (done) {
         chai.request(app)
-        .delete('/users/Vinicius')
+        .delete('/users/Caio')
         .end(function (err, res) {
             expect(err).to.be.null;
             expect(res).to.have.status(StatusCodes.OK);
@@ -139,7 +145,7 @@ describe('Testes da aplicaçao',  () => {
         });
     });
 
-    it('a usuaria Julia não existe no sistema', function (done) {
+    it('A usuaria Julia não existe no sistema', function (done) {
         chai.request(app)
         .get('/users/Julia')
         .end(function (err, res) {
@@ -149,7 +155,7 @@ describe('Testes da aplicaçao',  () => {
         });
     });
 
-    it('o usuario Breno existe e é valido', function (done) {
+    it('O usuario Breno existe e é valido', function (done) {
         chai.request(app)
         .get('/users/Breno')
         .end(function (err, res) {
@@ -160,9 +166,9 @@ describe('Testes da aplicaçao',  () => {
         });
     });
 
-    it('o usuario Vinicius não deve mais existir', function (done) {
+    it('O usuario Caio não deve mais existir', function (done) {
         chai.request(app)
-        .get('/users/Vinicius')
+        .get('/users/Caio')
         .end(function (err, res) {
             expect(res).to.have.status(StatusCodes.NOT_FOUND);
             expect(res.text).to.be.equal("User not found");
@@ -170,7 +176,7 @@ describe('Testes da aplicaçao',  () => {
         });
     });
 
-    it('deve retornar uma lista com o minimo de 5 usuarios', function (done) {
+    it('Deve retornar uma lista com o minimo de 5 usuarios', function (done) {
         chai.request(app)
         .get('/users')
         .end(function (err, res) {
@@ -211,7 +217,7 @@ describe('Testes da aplicaçao',  () => {
         });
     });
 
-    it('deve editar o usario Breno', function (done) {
+    it('Deve editar o usario Breno', function (done) {
         chai.request(app)
         .put('/users/Breno')
         .send({
