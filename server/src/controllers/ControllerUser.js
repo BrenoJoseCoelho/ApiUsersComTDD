@@ -12,9 +12,9 @@ exports.getUsers = async (ctx) => {
 exports.createUser = async (ctx) => {
 
     
-    const dataUser = {nome, email, age} = ctx.request.body;
+    const dataUser = {name, email, age} = ctx.request.body;
 
-   var user = new User(dataUser.nome, dataUser.email, dataUser.age);
+   var user = new User(dataUser.name, dataUser.email, dataUser.age);
 
     if(dataUser.age < 18){
         ctx.response.status = StatusCodes.BAD_REQUEST;
@@ -72,7 +72,7 @@ exports.getByName = async (ctx) => {
 
     if(user.length === 0){
         ctx.response.status = StatusCodes.NOT_FOUND;
-        ctx.response.message = "User no found";
+        ctx.response.message = "User not found";
     }else{
         ctx.response.status = StatusCodes.OK;
         ctx.response.body = user;
