@@ -19,7 +19,7 @@ exports.createUser = async (ctx) => {
     if(dataUser.age < 18){
         ctx.response.status = StatusCodes.BAD_REQUEST;
         ctx.response.message = "Age under 18!";
-    }else{
+    }if(dataUser.name != "" && dataUser.email != "" && dataUser.age != "" && dataUser.age >= 18){
         await user.create();
         ctx.response.message = "User created!";
         ctx.response.status = StatusCodes.CREATED;       
